@@ -25,6 +25,7 @@ import Maintenance from '@components/Maintenance';
 import ProductCard from '@components/ProductCard';
 import SearchContainer from '../../components/SearchContainer';
 import { useTranslation } from 'react-i18next';
+import Grid from '@mui/material/Grid2';
 
 /**
  * Function `ProductSearch`.
@@ -141,17 +142,19 @@ function ProductSearch() {
           </AccordionSummary>
           <Divider sx={{ borderTop: '1px solid' }} />
           <AccordionDetails>
-            <Box className={'catalog-grid'}>
-              {productCatalogs.products.map((product, index) => (
-                <ProductCard
-                  catalog={productCatalogs.catalog}
-                  historyEnabled={productCatalogs.data.historyEnabled}
-                  key={index}
-                  locale={productCatalogs.locale}
-                  productData={product}
-                />
-              ))}
+            {/* <Box className={'catalog-grid'}> */}
+            <Box sx={{ display: 'flex', overflowX: 'auto', whiteSpace: 'nowrap' }}>
+                {productCatalogs.products.map((product, index) => (
+                  <ProductCard
+                    catalog={productCatalogs.catalog}
+                    historyEnabled={productCatalogs.data.historyEnabled}
+                    key={index}
+                    locale={productCatalogs.locale}
+                    productData={product}
+                  />
+                ))}
             </Box>
+            {/* </Box> */}
           </AccordionDetails>
         </Accordion>
       ))}

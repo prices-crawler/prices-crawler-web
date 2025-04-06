@@ -6,6 +6,7 @@
 
 import {
   AppBar,
+  Avatar,
   Badge,
   Box,
   Container,
@@ -16,9 +17,10 @@ import {
   MenuItem,
   Select,
   Toolbar,
+  Tooltip,
   Typography
 } from '@mui/material';
-import { Brightness4, Brightness7, Menu as MenuIcon } from '@mui/icons-material';
+import { Brightness4, Brightness7, Adb as AdbIcon, Menu as MenuIcon } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -70,8 +72,115 @@ function NavigationBar({ theme }) {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
+  
   return (
+
+    // <AppBar position="static">
+    //   <Container maxWidth="xl">
+    //     <Toolbar disableGutters>
+    //       <Link to={'/'}>
+    //         <img
+    //           alt={''}
+    //           className={'d-inline-block'}
+    //           height={40}
+    //           src={logo}
+    //           width={40}
+    //         />
+    //       </Link>
+    //       <Typography
+    //         component={Link}
+    //         noWrap
+    //         sx={{
+    //           color: 'inherit',
+    //           display: { md: 'flex' },
+    //           fontWeight: 700,
+    //           ml: 1
+    //         }}
+    //         to={'/'}
+    //         variant={'h6'}
+    //       >
+    //         {t('title.base')}
+    //       </Typography>
+
+    //       <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+    //         <IconButton
+    //           size="large"
+    //           aria-label="account of current user"
+    //           aria-controls="menu-appbar"
+    //           aria-haspopup="true"
+    //           onClick={handleMenuOpen}
+    //           color="inherit"
+    //         >
+    //           <MenuIcon />
+    //         </IconButton>
+    //         <Menu
+    //           id="menu-appbar"
+    //           anchorEl={anchorEl}
+    //           anchorOrigin={{
+    //             vertical: 'bottom',
+    //             horizontal: 'left',
+    //           }}
+    //           keepMounted
+    //           transformOrigin={{
+    //             vertical: 'top',
+    //             horizontal: 'left',
+    //           }}
+    //           open={Boolean(anchorEl)}
+    //           onClose={handleMenuClose}
+    //           sx={{ display: { xs: 'block', md: 'none' } }}
+    //         >
+    //           {/* {pages.map((page) => (
+    //             <MenuItem key={page} onClick={handleMenuClose}>
+    //               <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+    //             </MenuItem>
+    //           ))} */}
+    //         </Menu>
+    //       </Box>
+    //       <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+    //         {/* {pages.map((page) => (
+    //           <Button
+    //             key={page}
+    //             onClick={handleMenuClose}
+    //             sx={{ my: 2, color: 'white', display: 'block' }}
+    //           >
+    //             {page}
+    //           </Button>
+    //         ))} */}
+    //       </Box>
+    //       <Box sx={{ flexGrow: 0 }}>
+    //         <Tooltip title="Open settings">
+    //           <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
+    //             <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+    //           </IconButton>
+    //         </Tooltip>
+    //         {/* <Menu
+    //           sx={{ mt: '45px' }}
+    //           id="menu-appbar"
+    //           anchorEl={anchorElUser}
+    //           anchorOrigin={{
+    //             vertical: 'top',
+    //             horizontal: 'right',
+    //           }}
+    //           keepMounted
+    //           transformOrigin={{
+    //             vertical: 'top',
+    //             horizontal: 'right',
+    //           }}
+    //           open={Boolean(anchorElUser)}
+    //           onClose={handleCloseUserMenu}
+    //         >
+    //           {settings.map((setting) => (
+    //             <MenuItem key={setting} onClick={handleCloseUserMenu}>
+    //               <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+    //             </MenuItem>
+    //           ))}
+    //         </Menu> */}
+    //       </Box>
+    //     </Toolbar>
+    //   </Container>
+    // </AppBar>
+
+    //OLD
     <>
       <AppBar
         position={'static'}
