@@ -41,6 +41,7 @@
     "web-vitals": "^4.2.0"
   },
   "scripts": {
+    "dev": "vite --port 3000 --host",
     "start": "vite",
     "build": "vite build",
     "format:check": "prettier --check .",

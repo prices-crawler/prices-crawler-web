@@ -32,7 +32,11 @@ function NavigationBar({ theme }) {
   const { i18n, t } = useTranslation();
   const [lang, setLang] = useState(i18n.language);
   const { productList } = useSelector((state) => state.productList);
-  const numberOfProducts = () => productList.reduce((acc, prod) => acc + prod.quantity, 0);
+  const numberOfProducts = () => {
+    return productList.reduce((total, list) => {
+      return total + list.products.reduce((acc, prod) => acc + prod.quantity, 0);
+    }, 0);
+  };
   const logo = '/logo.png';
 
   const selectedLanguage = () => {

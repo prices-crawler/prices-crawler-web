@@ -1,5 +1,3 @@
-/* eslint-disable id-length */
-/* eslint-disable no-unused-vars */
 /**
  * Module dependencies.
  */
@@ -43,7 +41,7 @@ function PricesChart({ data }) {
       });
 
       // Sort chartData based on dates
-      chartData.sort((a, b) => a[0] - b[0]);
+      chartData.sort((first, second) => first[0] - second[0]);
     }
 
     return chartData;

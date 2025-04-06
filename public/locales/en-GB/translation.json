@@ -42,7 +42,8 @@
     "maintenance": "Please try again later. Available in:",
     "product-list-replace": "Are you sure you want to import this product list? This will replace your current product list.",
     "general.product-list-replace-title": "Import Product List:",
-    "error": "Error"
+    "error": "Error",
+    "new-list": "New List"
   },
   "pages": {
     "about": {
@@ -101,7 +102,8 @@
       "details": "Details",
       "add-to-list": "Add to List",
       "remove-add": "Remove | Add",
-      "move": "Up | Down"
+      "move": "Up | Down",
+      "list": "List"
     },
     "error": {
       "product-outdated": "The product price information is outdated, please try again later."

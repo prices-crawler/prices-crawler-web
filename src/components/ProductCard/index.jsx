@@ -5,9 +5,13 @@
 
 import './index.scss';
 import * as productsActions from '@services/store/products/productsActions';
+import { Button, ButtonGroup, Menu, MenuItem } from '@mui/material';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import AddIcon from '@mui/icons-material/Add';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Link } from 'react-router-dom';
-import React from 'react';
+import { MAX_LISTS } from '@services/store/products/productsReducer';
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -15,41 +19,77 @@ import { useTranslation } from 'react-i18next';
  */
 
 function ProductCard({ catalog, historyEnabled, locale, productData }) {
+  const [menuAnchor, setMenuAnchor] = useState(null);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.productList);
-
   const renderText = (value) => (value.length > 35 ? `${value.substring(0, 35)}...` : value);
 
   /**
    * Add to List.
    */
 
-  const addToList = (event) => {
-    event.preventDefault();
-    const product = productList.find(
-      (prod) => prod.key === `${locale}.${catalog}.${productData.reference}`
-    );
+  const addToList = (listName) => {
+    const productKey = `${locale}.${catalog}.${productData.reference}`;
+
+    const product = productList
+      .filter((list) => {
+        return list.name === listName;
+      })
+      .find((prod) => prod.products.some((product) => product.key === productKey));
 
     if (product) {
-      const updatedProduct = {
-        ...product,
-        quantity: product.quantity + 1
+      productList
+        .filter((list) => {
+          return list.name === listName;
+        })
+        .map((list) => {
+          if (list.products.some((product) => product.key === productKey)) {
+            return {
+              ...list,
+              products: list.products.map((product) => {
+                if (product.key === productKey) {
+                  dispatch(
+                    productsActions.addToProductList(
+                      { ...product, quantity: product.quantity + 1 },
+                      listName
+                    )
+                  );
+                }
+              })
+            };
+          }
+        });
+    } else {
+      const newProduct = {
+        catalog,
+        historyEnabled,
+        key: productKey,
+        locale,
+        product: productData,
+        quantity: 1
       };
 
-      dispatch(productsActions.addToProductList(updatedProduct));
-    } else {
-      dispatch(
-        productsActions.addToProductList({
-          catalog,
-          historyEnabled,
-          key: `${locale}.${catalog}.${productData.reference}`,
-          locale,
-          product: productData,
-          quantity: 1
-        })
-      );
+      dispatch(productsActions.addToProductList(newProduct, listName));
+      setMenuAnchor(null);
     }
+  };
+
+  /**
+   * Create new List.
+   */
+
+  const handleCreateNewList = () => {
+    if (productList.length >= MAX_LISTS) {
+      return;
+    }
+
+    const newList = {
+      name: `List ${productList.length + 1}`,
+      products: []
+    };
+
+    dispatch(productsActions.createNewList(newList));
   };
 
   return (
@@ -118,26 +158,77 @@ function ProductCard({ catalog, historyEnabled, locale, productData }) {
           rel={'noopener noreferrer'}
           target={'_blank'}
         >
-          <button className={'product-card-button'}>{t('data.product-fields.store-page')}</button>
+          <Button
+            className={'product-card-button'}
+            size={'small'}
+            style={{ textTransform: 'capitalize' }}
+            variant={'contained'}
+          >
+            {t('data.product-fields.store-page')}
+          </Button>
         </a>
-        &nbsp;&nbsp;
+        &nbsp;
         {historyEnabled ? (
           <Link
             target={'_self'}
             to={`/product/${locale}/${catalog}/${productData.reference}`}
           >
-            <button className={'product-card-button'}>{t('data.product-fields.details')}</button>
+            <Button
+              className={'product-card-button'}
+              size={'small'}
+              style={{ textTransform: 'capitalize' }}
+              variant={'contained'}
+            >
+              {t('data.product-fields.details')}
+            </Button>
           </Link>
         ) : (
           <></>
         )}
-        &nbsp;&nbsp;
-        <button
-          className={'product-card-button'}
-          onClick={addToList}
+        &nbsp;
+        <ButtonGroup variant={'contained'}>
+          <Button
+            className={'product-card-button'}
+            onClick={() => addToList('menu.product-list 1')}
+            size={'small'}
+            style={{ textTransform: 'capitalize' }}
+          >
+            {t('data.product-fields.add-to-list')}
+          </Button>
+          <Button
+            aria-expanded={menuAnchor ? 'true' : undefined}
+            aria-haspopup={'menu'}
+            aria-label={'split button'}
+            className={'product-card-button'}
+            endIcon={<ArrowDropDownIcon />}
+            onClick={(event) => setMenuAnchor(event.currentTarget)}
+            size={'small'}
+            style={{ width: '1rem' }}
+          />
+        </ButtonGroup>
+        <Menu
+          MenuListProps={{
+            'aria-labelledby': 'split-button-menu'
+          }}
+          anchorEl={menuAnchor}
+          onClose={() => setMenuAnchor(null)}
+          open={Boolean(menuAnchor)}
         >
-          {t('data.product-fields.add-to-list')}
-        </button>
+          {productList.map((list) => (
+            <MenuItem
+              key={list.name}
+              onClick={() => addToList(list.name)}
+            >
+              {list.name}
+            </MenuItem>
+          ))}
+          {productList.length < MAX_LISTS && (
+            <MenuItem onClick={handleCreateNewList}>
+              {t('general.new-list')}
+              <AddIcon sx={{ fontSize: '1.4rem', marginInlineStart: '0.3rem' }} />
+            </MenuItem>
+          )}
+        </Menu>
       </center>
 
       {productData.campaignPrice ? (

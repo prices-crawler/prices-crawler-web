@@ -42,7 +42,8 @@
     "maintenance": "Por favor tente mais tarde. Disponível em:",
     "product-list-replace": "Tem a certeza de que deseja importar esta lista de produtos? Isto irá substituir a sua lista de produtos atual.",
     "product-list-replace-title": "Importar lista de produtos:",
-    "error": "Erro"
+    "error": "Erro",
+    "new-list": "Nova Lista"
   },
   "pages": {
     "about": {
@@ -101,7 +102,8 @@
       "details": "Detalhes",
       "add-to-list": "Adicionar",
       "remove-add": "Remover | Adicionar",
-      "move": "Cima | Baixo"
+      "move": "Cima | Baixo",
+      "list": "Lista"
     },
     "error": {
       "product-outdated": "A informação do preço do produto está desatualizada, por favor, tente novamente mais tarde."

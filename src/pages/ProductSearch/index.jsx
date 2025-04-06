@@ -92,6 +92,7 @@ function ProductSearch() {
             <InputLabel id={'sort-by'}>{t('menu.order.default')}</InputLabel>
             <Select
               autoWidth
+              defaultValue={t('menu.order.default')}
               id={'sort-by-select'}
               label={'Sort By'}
               labelId={'sort-by'}
@@ -105,6 +106,12 @@ function ProductSearch() {
               }}
               value={orderBy}
             >
+              <MenuItem
+                disabled
+                value={t('menu.order.default')}
+              >
+                {t('menu.order.default')}
+              </MenuItem>
               <MenuItem value={t('menu.order.asc')}>{t('menu.order.asc')}</MenuItem>
               <MenuItem value={t('menu.order.desc')}>{t('menu.order.desc')}</MenuItem>
               <MenuItem value={t('menu.order.asc-price-per-quantity')}>
